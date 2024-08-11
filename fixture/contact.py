@@ -5,13 +5,13 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def open_contact_page(self):
+    def open_contact_creation_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
     def add_personal_information(self, contact):
         wd = self.app.wd
-        self.open_contact_page()
+        self.open_contact_creation_page()
         # name fields
         wd.find_element_by_name("firstname").send_keys(contact.first_name)
         wd.find_element_by_name("middlename").send_keys(contact.middle_name)
@@ -47,6 +47,47 @@ class ContactHelper:
     def sumbit_contact_creation(self):
         wd = self.app.wd
         wd.find_element_by_name("submit").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        # select first checkbox contact
+        wd.find_element_by_name("selected[]").click()
+        # delete first checkbox contact
+        wd.find_element_by_css_selector("input[value='Delete']").click()
+
+    def modify_first_contact(self, contact):
+        wd = self.app.wd
+        self.open_contact_edition_page()
+        # contact information
+        wd.find_element_by_name("title").clear()
+        wd.find_element_by_name("title").send_keys(contact.title)
+        wd.find_element_by_name("company").clear()
+        wd.find_element_by_name("company").send_keys(contact.company)
+        wd.find_element_by_name("address").clear()
+        wd.find_element_by_name("address").send_keys(contact.address)
+        wd.find_element_by_name("home").clear()
+        wd.find_element_by_name("home").send_keys(contact.home)
+        wd.find_element_by_name("mobile").clear()
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
+        wd.find_element_by_name("fax").clear()
+        wd.find_element_by_name("fax").send_keys(contact.fax)
+        # email fields
+        wd.find_element_by_name("email").clear()
+        wd.find_element_by_name("email").send_keys(contact.email_1)
+        wd.find_element_by_name("email2").clear()
+        wd.find_element_by_name("email2").send_keys(contact.email_2)
+        wd.find_element_by_name("email3").clear()
+        wd.find_element_by_name("email3").send_keys(contact.email_3)
+        self.update_contact_confirmation()
+        self.return_to_home_page()
+
+    def open_contact_edition_page(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+
+    def update_contact_confirmation(self):
+        wd = self.app.wd
+        wd.find_element_by_name("update").click()
 
     def return_to_home_page(self):
         wd = self.app.wd

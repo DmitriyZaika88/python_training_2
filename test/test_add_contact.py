@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model.contact import Contact
-from fixture.application import Application
-
-
-@pytest.fixture
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
+import time
 
 
 def test_add_contact(app):
@@ -35,6 +27,7 @@ def test_add_contact(app):
                                          anniversary_month="June",
                                          anniversary_year="2027"))
     app.session.logout()
+    time.sleep(3)
 
 
 def test_add_empty_contact(app):
@@ -61,3 +54,4 @@ def test_add_empty_contact(app):
                                          anniversary_month="",
                                          anniversary_year=""))
     app.session.logout()
+    time.sleep(3)
