@@ -12,8 +12,8 @@ def app(request):
 
 
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
-    app.add_personal_information(Contact(first_name="alex",
+    app.session.login(username="admin", password="secret")
+    app.contact.add_personal_information(Contact(first_name="alex",
                                          middle_name="wellington",
                                          last_name="Andressen",
                                          nickname="Andy",
@@ -34,12 +34,12 @@ def test_add_contact(app):
                                          anniversary_day="30",
                                          anniversary_month="June",
                                          anniversary_year="2027"))
-    app.logout()
+    app.session.logout()
 
 
 def test_add_empty_contact(app):
-    app.login(username="admin", password="secret")
-    app.add_personal_information(Contact(first_name="",
+    app.session.login(username="admin", password="secret")
+    app.contact.add_personal_information(Contact(first_name="",
                                          middle_name="",
                                          last_name="",
                                          nickname="",
@@ -60,4 +60,4 @@ def test_add_empty_contact(app):
                                          anniversary_day="",
                                          anniversary_month="",
                                          anniversary_year=""))
-    app.logout()
+    app.session.logout()
