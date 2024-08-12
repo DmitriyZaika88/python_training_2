@@ -9,21 +9,33 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
+    def fill_group_name(self, group):
+        wd = self.app.wd
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.name)
+
+    def fill_group_header(self, group):
+        wd = self.app.wd
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys(group.header)
+
+    def fill_group_footer(self, group):
+        wd = self.app.wd
+        wd.find_element_by_name("group_footer").click()
+        wd.find_element_by_name("group_footer").clear()
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
+
     def create(self, group):
         wd = self.app.wd
         self.open_groups_page()
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group form
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        self.fill_group_name(group)
+        self.fill_group_header(group)
+        self.fill_group_footer(group)
         self.submit_group_creation()
         self.return_to_groups_page()
 
@@ -47,15 +59,11 @@ class GroupHelper:
         wd.find_element_by_name("selected[]").click()
         # edit selected group
         wd.find_element_by_name("edit").click()
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
+        self.fill_group_name(group)
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
+        self.fill_group_header(group)
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        self.fill_group_footer(group)
         self.update_group_confirmation()
         self.return_to_groups_page()
 
